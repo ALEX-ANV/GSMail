@@ -1,0 +1,2 @@
+# GSMail
+Mail manager
