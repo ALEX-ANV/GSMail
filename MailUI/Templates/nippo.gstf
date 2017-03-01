@@ -1,0 +1,3 @@
+﻿{NameFile}
+----
+{list:"Activities", item:"{TaskName} N EV TRA {BeginWork:hh':'mm} {EndWork:hh':'mm} {EndWork:hh':'mm} D: {Customer} ; {Description}"}

@@ -1,0 +1,99 @@
+﻿<controls:MetroWindow x:Class="MailUI.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:mainWindowUserControls="clr-namespace:MailUI.View.MainWindowUserControls"
+        Title="Почтовая система" 
+        WindowState="Maximized"
+        Loaded="MainWindow_OnLoaded"
+        ShowTitleBar="True">
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button>
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="16"
+                               Height="16"
+                               Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_settings}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                    <TextBlock Margin="4 0 0 0"
+                   VerticalAlignment="Center"
+                   Text="НАСТРОЙКИ" />
+                </StackPanel>
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Menu>
+            <MenuItem Header="Файл">
+                <MenuItem Header="New" Click="MenuItem_OnClick"></MenuItem>
+                <MenuItem Header="Open"></MenuItem>
+                <MenuItem Header="Save"></MenuItem>
+                <MenuItem Header="SaveAs..."></MenuItem>
+                <Separator></Separator>
+                <MenuItem Header="Exit"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Инструменты">
+                <MenuItem Header="Undo"></MenuItem>
+                <MenuItem Header="Redo"></MenuItem>
+                <MenuItem Header="Добавить сотрудника"></MenuItem>
+                <!--MenuItem Header="Отправить письмо" Click="SendMessage_Click"></>
+                <Separator></Separator>
+                <MenuItem Header="Cut"></MenuItem>
+                <MenuItem Header="Copy"></MenuItem>
+                <MenuItem Header="Проверить почту" Click="PullMessage_OnClick"></MenuItem>
+                <MenuItem Header="Обновить дерево" Click="MenuItem_OnClick"></MenuItem-->
+            </MenuItem>
+            <MenuItem Header="Помощь">
+                <MenuItem Header="Об авторе"></MenuItem>
+            </MenuItem>
+        </Menu>
+        <TabControl Grid.Row="1">
+            <TabItem Header="Почта">
+                <mainWindowUserControls:MailControl/>   
+            </TabItem>
+            <TabItem Header="Проекты" >
+                <mainWindowUserControls:TaskControl/>
+            </TabItem>
+            <TabItem Header="Менеджмент">
+                <mainWindowUserControls:ManagmentControl/>
+            </TabItem>
+        </TabControl>
+        <StatusBar Grid.Row="2" Margin="0,5,0,0">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="150" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            <StatusBarItem Grid.Column="0" HorizontalAlignment="Center">
+                <TextBlock Name ="UserDomain" IsEnabled="False"></TextBlock>
+            </StatusBarItem>
+            <Separator Grid.Column="1" />
+            <StatusBarItem Grid.Column="2" HorizontalAlignment="Center">
+                <TextBlock>Тест в центре</TextBlock>
+            </StatusBarItem>
+            <Separator Grid.Column="3" />
+            <StatusBarItem Grid.Column="4" HorizontalAlignment="Center">
+                <TextBlock x:Name="TimeBlock"></TextBlock>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</controls:MetroWindow>
+

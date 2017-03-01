@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="MailUI.View.MainWindowUserControls.ManagmentControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MailUI.View.MainWindowUserControls"
+             xmlns:generic="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:converters="clr-namespace:MailUI.Converters"
+             xmlns:model="clr-namespace:MailUI.Model"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <converters:ToUpper x:Key="ToUpper" />
+        <converters:SelectedRadioButton x:Key="SelectedRadioButton"/>
+        <converters:ContentFile x:Key="ContentFile"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ListBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding ManagmentFiles, Mode=OneWay}"
+                 x:Name="TemplateFiles">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="model:ManagmentFileModel">
+                    <StackPanel Orientation="Horizontal">
+                        <Rectangle Width="16"
+                               Height="16"
+                               Fill="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=Foreground}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_page_code}" />
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                    <TextBlock Text="{Binding Path=Header, Mode=OneWay, Converter={StaticResource ToUpper}}"
+                               Margin="5,0,0,0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <ListView Grid.Row="1" Grid.Column="0" 
+                 ItemsSource="{Binding SelectedValue, ElementName=TemplateFiles, Converter={StaticResource SelectedRadioButton}}">
+            <!--<ListBox.ItemTemplate>
+                <DataTemplate>
+                    <RadioButton GroupName="ManagmentFiles">
+                        <RadioButton.Content>
+                            <TextBox Text="{Binding Path=Key, Converter={StaticResource ToUpper}}"/>
+                        </RadioButton.Content>
+                    </RadioButton>
+                </DataTemplate>
+            </ListBox.ItemTemplate>-->
+        </ListView>
+        <UserControl Grid.Row="0" Grid.Column="1"
+                     DataContext="{Binding SelectedValue, ElementName=TemplateFiles}"
+                     Content="{Binding Path=Control}"
+                     Grid.RowSpan="2"/>
+       
+    </Grid>
+</UserControl>

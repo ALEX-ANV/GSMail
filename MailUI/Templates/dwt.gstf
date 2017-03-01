@@ -1,0 +1,23 @@
+﻿.h1 {namefile}
+.h2 Activity
+
+Month: {date:yyyy}, {date:MMMM}
+
+ DWT: {WorkingDayPercent}%  ({WorkingDay} w.d.) 
+
+TASK basis: {TaskBasisEfforts} w.d. total  	   
+       
+   {list:"TaskBasis", item:"{TaskName} {Member} {Efforts} w.d. {Description}"} 
+
+NIPPO basis: {NippoBasisEfforts} w.d. total
+        
+   {list:"NippoBasis"}
+                                       	   
+BT basis: {BtBasisEfforts} w.d. total
+		
+     {list:"BtBasis", item="{TaskName} {Member} {Efforts} w.d. {Description}"}
+
+Reserved: {Reserved} w.d.
+                                                                                  
+:{User}
+****

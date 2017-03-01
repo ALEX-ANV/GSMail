@@ -1,0 +1,7 @@
+﻿.h1 {nameFile} {date:yyyy'.'MM'.'dd}
+.h2 {user} wtu
+
+    {list:"TimeWorkingDay", item:"{beginWork:hh':'mm} - {endWork:hh':'mm}"}
+
+:{user}
+****
