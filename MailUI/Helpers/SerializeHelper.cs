@@ -27,6 +27,7 @@ namespace MailUI.Helpers
             }
             catch (Exception e)
             {
+                Logging.Exception(e);
                 return null;
             }
         }

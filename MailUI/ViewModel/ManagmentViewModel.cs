@@ -1,33 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
+using System.Reflection;
 using MailUI.Model;
-using MailUI.View.ManagmentControls;
 using MailUI.ViewModel.ManagmentViewModels;
 
 namespace MailUI.ViewModel
 {
-    class ManagmentViewModel : BaseViewModel
+    [Export(typeof(ITabControl))]
+    public class ManagmentViewModel : BaseViewModel
     {
-        public ObservableCollection<ManagmentFileModel> ManagmentFiles
-        {
-            get
-            {
-                var file = Templates.TemplateFiles["ct"];
-                var list = new ObservableCollection<ManagmentFileModel>
-                {
-                    new ManagmentFileModel("ct", new CtControl(new CtViewModel(file)))
-                };
-                return list;
-            }
-        }
+        public ObservableCollection<ManagmentFileModel> ManagmentFiles { get; set; }
+
+        [ImportMany(typeof(ITemplateView))]
+        private IEnumerable<ITemplateView> TemplateViews { get; set; }
 
         public ManagmentViewModel()
         {
-            
+            ManagmentFiles = new ObservableCollection<ManagmentFileModel>();
+            var templates = new Templates();
+            AssemblyCatalog catalog = new AssemblyCatalog(Assembly.GetExecutingAssembly());
+            var container = new CompositionContainer(catalog);
+            container.ComposeParts(this);
+            foreach (var templateView in TemplateViews)
+            {
+                templateView.Attach(this, templates.TemplateFiles[templateView.InstanceType]);
+            }
         }
     }
 }

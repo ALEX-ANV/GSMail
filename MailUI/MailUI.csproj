@@ -65,6 +65,21 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Composition.AttributedModel, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.AttributedModel.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Composition.Convention, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.Convention.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Composition.Hosting, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.Hosting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Composition.Runtime, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Composition.TypedParts, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.TypedParts.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -90,12 +105,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\ManagmentFile.cs" />
+    <Compile Include="Converters\ArrayStringToStringConverter.cs" />
+    <Compile Include="Converters\TimeToString.cs" />
+    <Compile Include="Model\Commands\CommandModel.cs" />
+    <Compile Include="Model\ManagmentFileModel.cs" />
     <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\ManagmentFiles\CtFile.cs" />
     <Compile Include="Model\ManagmentFiles\DwtFile.cs" />
     <Compile Include="Model\IBaseModel.cs" />
     <Compile Include="Model\ManagmentFiles\IManagmentFile.cs" />
+    <Compile Include="Tools\NotifyPropertyChanged.cs" />
+    <Compile Include="ViewModel\ManagmentViewModels\ITemplateView.cs" />
     <Compile Include="Model\ManagmentFiles\ManagmentFile.cs" />
     <Compile Include="Model\ManagmentFiles\NippoFile.cs" />
     <Compile Include="Model\ManagmentFiles\WtuFile.cs" />
@@ -109,21 +129,30 @@
     <Compile Include="Converters\SelectedRadioButton.cs" />
     <Compile Include="Converters\ToUpper.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
-    <Compile Include="Model\TreeItemModel.cs" />
+    <Compile Include="Model\Tree\TreeItemModel.cs" />
     <Compile Include="Helpers\SerializeHelper.cs" />
     <Compile Include="Utils\Logging.cs" />
     <Compile Include="Utils\StringList.cs" />
+    <Compile Include="ViewModel\ITabControl.cs" />
     <Compile Include="ViewModel\MailViewModel.cs" />
     <Compile Include="ViewModel\ManagmentViewModel.cs" />
     <Compile Include="ViewModel\ManagmentViewModels\CtViewModel.cs" />
+    <Compile Include="ViewModel\ManagmentViewModels\NippoViewModel.cs" />
+    <Compile Include="ViewModel\ManagmentViewModels\WtuViewModel.cs" />
     <Compile Include="View\MainWindowUserControls\ManagmentControl.xaml.cs">
       <DependentUpon>ManagmentControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindowUserControls\TaskControl.xaml.cs">
       <DependentUpon>TaskControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ManagmentControls\CtControl.xaml.cs">
-      <DependentUpon>CtControl.xaml</DependentUpon>
+    <Compile Include="View\ManagmentControls\CtControlView.xaml.cs">
+      <DependentUpon>CtControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ManagmentControls\NippoControlView.xaml.cs">
+      <DependentUpon>NippoControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ManagmentControls\WtuControlView.xaml.cs">
+      <DependentUpon>WtuControlView.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\Icons.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -161,7 +190,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ManagmentControls\CtControl.xaml">
+    <Page Include="View\ManagmentControls\CtControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ManagmentControls\NippoControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ManagmentControls\WtuControlView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

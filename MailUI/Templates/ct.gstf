@@ -1,7 +1,7 @@
 ﻿.h1 {NameFile} {date:yyyy'.'MM'.'dd}
 .h2 {UserName} Core Time. Month: {date:MMMM}
 
-{list:"CtWorking", item:"{date:dd'.'MM} {WorkingDay}"}
+{list:"CtWorking", item:"{day:dd'.'MM} {StartTime} - {StartDinner} {EndDinner} - {EndTime}"}
 
 :{UserName}
 ****

@@ -1,9 +1,12 @@
-﻿<controls:MetroWindow x:Class="MailUI.View.MainWindow"
+﻿<controls:MetroWindow
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:mainWindowUserControls="clr-namespace:MailUI.View.MainWindowUserControls"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+        xmlns:Custom="http://metro.mahapps.com/winfx/xaml/shared" 
+        x:Class="MailUI.View.MainWindow"
         Title="Почтовая система" 
         WindowState="Maximized"
         Loaded="MainWindow_OnLoaded"
@@ -14,7 +17,7 @@
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="16"
                                Height="16"
-                               Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                               Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_settings}" />
                         </Rectangle.OpacityMask>
@@ -29,23 +32,23 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Menu>
             <MenuItem Header="Файл">
-                <MenuItem Header="New" Click="MenuItem_OnClick"></MenuItem>
-                <MenuItem Header="Open"></MenuItem>
-                <MenuItem Header="Save"></MenuItem>
-                <MenuItem Header="SaveAs..."></MenuItem>
-                <Separator></Separator>
-                <MenuItem Header="Exit"></MenuItem>
+                <MenuItem Header="New" Click="MenuItem_OnClick"/>
+                <MenuItem Header="Open"/>
+                <MenuItem Header="Save"/>
+                <MenuItem Header="SaveAs..."/>
+                <Separator/>
+                <MenuItem Header="Exit"/>
             </MenuItem>
             <MenuItem Header="Инструменты">
-                <MenuItem Header="Undo"></MenuItem>
-                <MenuItem Header="Redo"></MenuItem>
-                <MenuItem Header="Добавить сотрудника"></MenuItem>
+                <MenuItem Header="Undo"/>
+                <MenuItem Header="Redo"/>
+                <MenuItem Header="Добавить сотрудника"/>
                 <!--MenuItem Header="Отправить письмо" Click="SendMessage_Click"></>
                 <Separator></Separator>
                 <MenuItem Header="Cut"></MenuItem>
@@ -54,12 +57,12 @@
                 <MenuItem Header="Обновить дерево" Click="MenuItem_OnClick"></MenuItem-->
             </MenuItem>
             <MenuItem Header="Помощь">
-                <MenuItem Header="Об авторе"></MenuItem>
+                <MenuItem Header="Об авторе"/>
             </MenuItem>
         </Menu>
-        <TabControl Grid.Row="1">
+        <TabControl Grid.Row="1" x:Name="tabControl" ItemsSource="{Binding Path=Tabs}">            
             <TabItem Header="Почта">
-                <mainWindowUserControls:MailControl/>   
+                <mainWindowUserControls:MailControl/>
             </TabItem>
             <TabItem Header="Проекты" >
                 <mainWindowUserControls:TaskControl/>
@@ -83,15 +86,15 @@
                 </ItemsPanelTemplate>
             </StatusBar.ItemsPanel>
             <StatusBarItem Grid.Column="0" HorizontalAlignment="Center">
-                <TextBlock Name ="UserDomain" IsEnabled="False"></TextBlock>
+                <TextBlock x:Name ="UserDomain" IsEnabled="False"/>
             </StatusBarItem>
             <Separator Grid.Column="1" />
             <StatusBarItem Grid.Column="2" HorizontalAlignment="Center">
-                <TextBlock>Тест в центре</TextBlock>
+                <TextBlock><Run Text="Тест в центре"/></TextBlock>
             </StatusBarItem>
             <Separator Grid.Column="3" />
             <StatusBarItem Grid.Column="4" HorizontalAlignment="Center">
-                <TextBlock x:Name="TimeBlock"></TextBlock>
+                <TextBlock x:Name="TimeBlock" Text="{Binding}"/>
             </StatusBarItem>
         </StatusBar>
     </Grid>

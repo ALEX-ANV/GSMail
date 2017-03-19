@@ -1,4 +1,7 @@
-﻿using System.Windows.Controls;
+﻿using System.ComponentModel.Composition;
+using System.Windows.Controls;
+using MahApps.Metro.Controls;
+using MailUI.ViewModel;
 
 namespace MailUI.View.MainWindowUserControls
 {

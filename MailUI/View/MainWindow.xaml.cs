@@ -1,27 +1,34 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Xml.Serialization;
 using MahApps.Metro.Controls.Dialogs;
 using MailUI.Context;
 using MailUI.Model;
+using MailUI.ViewModel;
 
 namespace MailUI.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow
+    public partial class MainWindow : INotifyPropertyChanged
     {
+        [ImportingConstructor]
         public MainWindow()
         {
             InitializeComponent();
             dbContext = new UserContext();
-
         }
 
         private UserContext dbContext;
@@ -45,14 +52,14 @@ namespace MailUI.View
 
                 };
 
-                var loginData = await this.ShowLoginAsync("Авторизация", "", dialog);
-                if (loginData == null)
-                {
-                    Environment.Exit(0);
-                }
+                //var loginData = await this.ShowLoginAsync("Авторизация", "", dialog);
+                //if (loginData == null)
+                //{
+                //    Environment.Exit(0);
+                //}
                 var user = dbContext.Users.FirstOrDefault(item =>
-                  string.Equals(item.UserName.ToLower(), loginData.Username.ToLower())
-                    && string.Equals(item.Password, loginData.Password));
+                  string.Equals(item.UserName.ToLower(), /*loginData.Username*/"anv".ToLower())
+                    && string.Equals(item.Password, /*loginData.Password*/"313"));
                 if (user == null)
                 {
                     await this.ShowMessageAsync("Ошибка", "Неправильный логин или пароль");
@@ -64,7 +71,7 @@ namespace MailUI.View
             }
         }
 
-        private async void MenuItem_OnClick(object sender, RoutedEventArgs e)
+        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
         {
             //var login = new AuthorizationControl();
             //login.Visibility = Visibility.Visible;
@@ -74,6 +81,13 @@ namespace MailUI.View
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
             Autorization();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

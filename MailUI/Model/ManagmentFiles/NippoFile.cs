@@ -1,23 +1,56 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel.Composition;
 using MailUI.Utils;
 
 namespace MailUI.Model.ManagmentFiles
 {
     public class NippoFile : ManagmentFile
     {
-        public StringList<BaseModel> Activities { get; set; }
+        private ObservableCollection<ManagmentFile> _activities;
+        public ObservableCollection<ManagmentFile> Activities
+        {
+            get { return _activities; }
+            set { SetProperty(ref _activities, value);}
+        }
+
     }
 
     public class Activity : ManagmentFile
     {
-        public string TaskName { get; set; }
+        private string _taskName;
+        public string TaskName
+        {
+            get { return _taskName; }
+            set { SetProperty(ref _taskName, value);}
+        }
 
-        public TimeSpan BeginWork { get; set; }
+        private TimeSpan _beginWork;
+        public TimeSpan BeginWork
+        {
+            get { return _beginWork; }
+            set { SetProperty(ref _beginWork, value);}
+        }
 
-        public TimeSpan EndWork { get; set; }
+        private TimeSpan _endWork;
+        public TimeSpan EndWork
+        {
+            get { return _endWork; }
+            set { SetProperty(ref _endWork, value);}
+        }
 
-        public string Customer { get; set; }
+        private string _customer;
+        public string Customer
+        {
+            get { return _customer; }
+            set { SetProperty(ref _customer, value);}
+        }
 
-        public string Description { get; set; }
+        private string _description;
+        public string Description
+        {
+            get { return _description; }
+            set { SetProperty(ref _description, value);}
+        }
     }
 }

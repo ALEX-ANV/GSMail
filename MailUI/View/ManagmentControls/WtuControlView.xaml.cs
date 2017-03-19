@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,21 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MahApps.Metro.Controls;
-using MailUI.ViewModel;
 
-namespace MailUI.View.MainWindowUserControls
+namespace MailUI.View.ManagmentControls
 {
     /// <summary>
-    /// Interaction logic for TaskControl.xaml
+    /// Interaction logic for WtuControlView.xaml
     /// </summary>
-    public partial class TaskControl : UserControl
+    public partial class WtuControlView : UserControl
     {
-        public TaskControl()
+        public WtuControlView()
         {
             InitializeComponent();
-            var treeTasks = new TaskViewModel(@"c:\Tempest");
-            DataContext = treeTasks;
         }
     }
 }

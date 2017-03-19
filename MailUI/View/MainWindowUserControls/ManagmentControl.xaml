@@ -25,7 +25,20 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="2*"></RowDefinition>
         </Grid.RowDefinitions>
-        <ListBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding ManagmentFiles, Mode=OneWay}"
+
+        <StackPanel Grid.Row="0" Grid.Column="0">
+            <!--<ListBox.ItemTemplate>
+                <DataTemplate>
+                    <RadioButton GroupName="ManagmentFiles">
+                        <RadioButton.Content>
+                            <TextBox Text="{Binding Path=Key, Converter={StaticResource ToUpper}}"/>
+                        </RadioButton.Content>
+                    </RadioButton>
+                </DataTemplate>
+            </ListBox.ItemTemplate>-->
+        </StackPanel>
+
+        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding ManagmentFiles, Mode=OneWay}"
                  x:Name="TemplateFiles">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="model:ManagmentFileModel">
@@ -43,22 +56,11 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListView Grid.Row="1" Grid.Column="0" 
-                 ItemsSource="{Binding SelectedValue, ElementName=TemplateFiles, Converter={StaticResource SelectedRadioButton}}">
-            <!--<ListBox.ItemTemplate>
-                <DataTemplate>
-                    <RadioButton GroupName="ManagmentFiles">
-                        <RadioButton.Content>
-                            <TextBox Text="{Binding Path=Key, Converter={StaticResource ToUpper}}"/>
-                        </RadioButton.Content>
-                    </RadioButton>
-                </DataTemplate>
-            </ListBox.ItemTemplate>-->
-        </ListView>
+        
+        
         <UserControl Grid.Row="0" Grid.Column="1"
                      DataContext="{Binding SelectedValue, ElementName=TemplateFiles}"
                      Content="{Binding Path=Control}"
                      Grid.RowSpan="2"/>
-       
     </Grid>
 </UserControl>

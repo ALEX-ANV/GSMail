@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,21 +14,29 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MahApps.Metro.Controls;
-using MailUI.ViewModel;
+using MailUI.Model;
+using MailUI.ViewModel.ManagmentViewModels;
 
-namespace MailUI.View.MainWindowUserControls
+namespace MailUI.View.ManagmentControls
 {
     /// <summary>
-    /// Interaction logic for TaskControl.xaml
+    /// Interaction logic for CtControl.xaml
     /// </summary>
-    public partial class TaskControl : UserControl
+    public partial class CtControlView : UserControl
     {
-        public TaskControl()
+        public CtViewModel Model { get; set; }
+
+        public CtControlView(CtViewModel model)
         {
             InitializeComponent();
-            var treeTasks = new TaskViewModel(@"c:\Tempest");
-            DataContext = treeTasks;
+            Model = model;
+            DataContext = Model;
+        }
+
+        
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

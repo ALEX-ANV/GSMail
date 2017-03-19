@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Globalization;
 using System.Linq;
@@ -14,42 +15,36 @@ namespace MailUI.Model.ManagmentFiles
 
         public string NameFile
         {
-            get
-            {
-                return _nameFile;
-            }
-            set
-            {
-                _nameFile = value;
-                OnPropertyChanged();
-            }
+            get { return _nameFile; }
+            set { SetProperty(ref _nameFile, value); }
         }
 
         public string FormatString(string pattern, IDictionary<string, object> values, char quotesStart = '{', char quoteEnd = '}')
         {
-            return FormatString(pattern.Split('\n'), values, quotesStart, quoteEnd);
+            return FormatString(pattern.Split('\n'), values, quotesStart, quoteEnd).Aggregate("", (current, item) => current + (item + "\r\n"));
         }
 
-        public string FormatString(string[] pattern, IDictionary<string, object> values, char quotesStart = '{', char quoteEnd = '}')
+        public string[] FormatString(string[] pattern, IDictionary<string, object> values, char quotesStart = '{', char quoteEnd = '}')
         {
-            var stringFile = "";
+            var stringFile = new List<string>();
             int replaceStartIndex = -1;
             int replaceEndIndex = -1;
             bool fullKey = true;
 
             for (var i = 0; i < pattern.Length; i++)
             {
+                stringFile.Add("");
                 do
                 {
                     replaceStartIndex = fullKey ? pattern[i].IndexOf('{') : replaceStartIndex;
                     replaceEndIndex = fullKey ? pattern[i].IndexOf('}') : pattern[i].IndexOf('}', replaceEndIndex + 1);
                     if (replaceStartIndex == -1 || replaceEndIndex == -1)
                     {
-                        stringFile += $"{pattern[i]}\n";
+                        stringFile[i] += $"{pattern[i]}";
                         pattern[i] = String.Empty;
                         continue;
                     }
-                    stringFile += fullKey ? pattern[i].Substring(0, replaceStartIndex) : String.Empty;
+                    stringFile[i] += fullKey ? pattern[i].Substring(0, replaceStartIndex) : String.Empty;
                     var key = pattern[i].Substring(replaceStartIndex, replaceEndIndex - replaceStartIndex + 1);
                     var tempKey = key;
                     var leftCountQuote = key.Count(item => item == '{');
@@ -61,53 +56,53 @@ namespace MailUI.Model.ManagmentFiles
                         var leftIndent = pattern[i].Substring(0, pattern[i].IndexOf(firstSymbol));
                         pattern[i] = pattern[i].Remove(0, replaceEndIndex + 1);
                         key = key.Substring(1, key.Length - 2);
-                        if (key.ToLower().Contains("list:"))
-                        {
-                            try
-                            {
-                                var nameListStart = key.IndexOf('"');
-                                var nameListEnd = key.IndexOf('"', nameListStart + 1);
-                                var nameList = key.Substring(nameListStart + 1, nameListEnd - nameListStart - 1).ToLower();
-                                var itemPattern = String.Empty;
+                        //if (key.ToLower().Contains("list:"))
+                        //{
+                        //    try
+                        //    {
+                        //        var nameListStart = key.IndexOf('"');
+                        //        var nameListEnd = key.IndexOf('"', nameListStart + 1);
+                        //        var nameList = key.Substring(nameListStart + 1, nameListEnd - nameListStart - 1).ToLower();
+                        //        var itemPattern = String.Empty;
 
-                                if (key.ToLower().Contains("item:"))
-                                {
-                                    var itemTemplateStart = key.IndexOf('"', nameListEnd + 1);
-                                    var itemTemplateEnd = key.IndexOf('"', itemTemplateStart + 1);
-                                    itemPattern = key.Substring(itemTemplateStart + 1,
-                                        itemTemplateEnd - itemTemplateStart - 1);
-                                }
+                        //        if (key.ToLower().Contains("item:"))
+                        //        {
+                        //            var itemTemplateStart = key.IndexOf('"', nameListEnd + 1);
+                        //            var itemTemplateEnd = key.IndexOf('"', itemTemplateStart + 1);
+                        //            itemPattern = key.Substring(itemTemplateStart + 1,
+                        //                itemTemplateEnd - itemTemplateStart - 1);
+                        //        }
 
-                                var baseModels = values[nameList] as StringList<BaseModel>;
-                                if (baseModels == null)
-                                {
-                                    stringFile += tempKey;
-                                    continue;
-                                }
+                        //        var baseModels = values[nameList] as ObservableCollection<ManagmentFile>;
+                        //        if (baseModels == null)
+                        //        {
+                        //            stringFile += tempKey;
+                        //            continue;
+                        //        }
 
-                                var index = 1;
-                                foreach (var baseModel in baseModels)
-                                {
-                                    if (string.IsNullOrEmpty(itemPattern))
-                                    {
-                                        stringFile += baseModel.GetValues(baseModel)
-                                            .Aggregate(index == 1 ? String.Empty : leftIndent, (current, item) => (String.IsNullOrEmpty(current) ? String.Empty : current + " ") + item.Value);
-                                        index++;
-                                    }
-                                    else
-                                    {
-                                        stringFile += FormatString((index == 1 ? String.Empty : leftIndent) + itemPattern, baseModel.GetValues(baseModel));
-                                        index++;
-                                    }
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                                Logging.Exception(e);
-                            }
-                        }
-                        else
-                        {
+                        //        var index = 1;
+                        //        foreach (var baseModel in baseModels)
+                        //        {
+                        //            if (string.IsNullOrEmpty(itemPattern))
+                        //            {
+                        //                stringFile += baseModel.GetValues(baseModel)
+                        //                    .Aggregate(index == 1 ? String.Empty : leftIndent, (current, item) => (String.IsNullOrEmpty(current) ? String.Empty : current + " ") + item.Value);
+                        //                index++;
+                        //            }
+                        //            else
+                        //            {
+                        //                stringFile += FormatString((index == 1 ? String.Empty : leftIndent) + itemPattern, baseModel.GetValues(baseModel));
+                        //                index++;
+                        //            }
+                        //        }
+                        //    }
+                        //    catch (Exception e)
+                        //    {
+                        //        Logging.Exception(e);
+                        //    }
+                        //}
+                        //else
+                        //{
                             var formatToString = String.Empty;
                             if (key.Contains(':'))
                             {
@@ -138,20 +133,16 @@ namespace MailUI.Model.ManagmentFiles
                             {
                                 stringValue = value.ToString();
                             }
-                            if (stringValue != null)
-                            {
-                                stringFile += stringValue;
-                            }
-                        }
+                        stringFile[i] += stringValue;
                     }
+                    //}
                     else
                     {
                         fullKey = false;
                     }
                 } while (!string.IsNullOrEmpty(pattern[i]));
-                stringFile += string.Equals(stringFile.Last(), '\n') ? String.Empty : "\n";
             }
-            return stringFile;
+            return stringFile.ToArray();
         }
     }
 }
