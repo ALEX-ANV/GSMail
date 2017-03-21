@@ -29,5 +29,12 @@ namespace MailUI.View.MainWindowUserControls
             var treeTasks = new TaskViewModel(@"c:\Tempest");
             DataContext = treeTasks;
         }
+
+        public string Header { get; }
+
+        public void AddTabItem(MainWindow baseView)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

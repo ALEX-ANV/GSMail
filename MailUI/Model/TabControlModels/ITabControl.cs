@@ -1,12 +1,13 @@
 ﻿using System.Windows.Controls;
-using MailUI.View;
 
-namespace MailUI.ViewModel
+namespace MailUI.Model.TabControlModels
 {
     public interface ITabControl
     {
         string Header { get; }
 
-        void AddTabItem(MainWindow baseView);
+        UserControl Control { get; }
+
+        int Order { get; }
     }
 }

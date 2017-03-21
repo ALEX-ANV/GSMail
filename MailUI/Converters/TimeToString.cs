@@ -9,6 +9,7 @@ using MahApps.Metro.Controls;
 
 namespace MailUI.Converters
 {
+    [ValueConversion(typeof(TimeSpan), typeof(string))]
     public class TimeToString : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

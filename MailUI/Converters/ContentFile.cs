@@ -10,7 +10,8 @@ using MailUI.Model;
 
 namespace MailUI.Converters
 {
-    class ContentFile : IValueConverter
+    [ValueConversion(typeof(FileInfo), typeof(string))]
+    public class ContentFile : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -18,10 +19,6 @@ namespace MailUI.Converters
             {
                 return File.ReadAllText(((FileInfo)value).FullName, Encoding.Default);
             }
-            //if (value is ManagmentFileModel)
-            //{
-            //    return ((ManagmentFileModel)value).Content.Aggregate("", (current, item) => current + "\n" + item);
-            //}
             return null;
         }
 

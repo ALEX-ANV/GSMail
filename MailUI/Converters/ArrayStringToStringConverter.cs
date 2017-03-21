@@ -8,6 +8,7 @@ using System.Windows.Data;
 
 namespace MailUI.Converters
 {
+    [ValueConversion(typeof(string[]), typeof(string))]
     public class ArrayStringToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

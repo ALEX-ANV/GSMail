@@ -10,7 +10,8 @@ using MailUI.Model;
 
 namespace MailUI.Converters
 {
-    class FilesInDirectory : IValueConverter
+    [ValueConversion(typeof(DirectoryInfo), typeof(FileInfo[]))]
+    public class FilesInDirectory : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

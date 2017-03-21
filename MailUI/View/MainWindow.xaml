@@ -5,12 +5,21 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:mainWindowUserControls="clr-namespace:MailUI.View.MainWindowUserControls"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
-        xmlns:Custom="http://metro.mahapps.com/winfx/xaml/shared" 
+        xmlns:Custom="http://metro.mahapps.com/winfx/xaml/shared"
+        xmlns:languages="clr-namespace:MailUI.Utils.Languages"
+        xmlns:converters="clr-namespace:MailUI.Converters"
         x:Class="MailUI.View.MainWindow"
         Title="Почтовая система" 
         WindowState="Maximized"
         Loaded="MainWindow_OnLoaded"
         ShowTitleBar="True">
+    <controls:MetroWindow.Resources>
+        <languages:LocalizationConverter x:Key="Localization" />
+        <converters:ValueConverterGroup x:Key="ToUpperLocalization">
+            <languages:LocalizationConverter/>
+            <converters:ToUpper/>
+        </converters:ValueConverterGroup>
+    </controls:MetroWindow.Resources>
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
             <Button>
@@ -24,7 +33,7 @@
                     </Rectangle>
                     <TextBlock Margin="4 0 0 0"
                    VerticalAlignment="Center"
-                   Text="НАСТРОЙКИ" />
+                   Text="{Binding Source=Base_Settings, Converter={StaticResource ToUpperLocalization}}" />
                 </StackPanel>
             </Button>
         </controls:WindowCommands>
@@ -60,8 +69,8 @@
                 <MenuItem Header="Об авторе"/>
             </MenuItem>
         </Menu>
-        <TabControl Grid.Row="1" x:Name="tabControl" ItemsSource="{Binding Path=Tabs}">            
-            <TabItem Header="Почта">
+        <TabControl Grid.Row="1" x:Name="tabControl" ItemsSource="{Binding Path=Tabs}" SelectedIndex="0"> 
+            <!--<TabItem Header="Почта">
                 <mainWindowUserControls:MailControl/>
             </TabItem>
             <TabItem Header="Проекты" >
@@ -69,7 +78,7 @@
             </TabItem>
             <TabItem Header="Менеджмент">
                 <mainWindowUserControls:ManagmentControl/>
-            </TabItem>
+            </TabItem>-->
         </TabControl>
         <StatusBar Grid.Row="2" Margin="0,5,0,0">
             <StatusBar.ItemsPanel>

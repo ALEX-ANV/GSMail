@@ -8,7 +8,8 @@ using System.Windows.Data;
 
 namespace MailUI.Converters
 {
-    class NullToBooleanConverter : IValueConverter
+    [ValueConversion(typeof(Nullable), typeof(bool))]
+    public class NullToBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

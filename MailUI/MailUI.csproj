@@ -107,6 +107,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\ArrayStringToStringConverter.cs" />
     <Compile Include="Converters\TimeToString.cs" />
+    <Compile Include="Converters\ValueGroupConverter.cs" />
     <Compile Include="Model\Commands\CommandModel.cs" />
     <Compile Include="Model\ManagmentFileModel.cs" />
     <Compile Include="Model\BaseModel.cs" />
@@ -114,7 +115,22 @@
     <Compile Include="Model\ManagmentFiles\DwtFile.cs" />
     <Compile Include="Model\IBaseModel.cs" />
     <Compile Include="Model\ManagmentFiles\IManagmentFile.cs" />
-    <Compile Include="Tools\NotifyPropertyChanged.cs" />
+    <Compile Include="Model\TabControlModels\MailControlItem.cs" />
+    <Compile Include="Model\TabControlModels\ManagmentControlItem.cs" />
+    <Compile Include="Model\TabControlModels\TaskControlItem.cs" />
+    <Compile Include="Utils\Languages\Localization.cs" />
+    <Compile Include="Utils\Languages\StringsEn.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StringsEn.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\Languages\StringsRu.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StringsRu.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\NotifyPropertyChanged.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ManagmentViewModels\ITemplateView.cs" />
     <Compile Include="Model\ManagmentFiles\ManagmentFile.cs" />
     <Compile Include="Model\ManagmentFiles\NippoFile.cs" />
@@ -133,7 +149,7 @@
     <Compile Include="Helpers\SerializeHelper.cs" />
     <Compile Include="Utils\Logging.cs" />
     <Compile Include="Utils\StringList.cs" />
-    <Compile Include="ViewModel\ITabControl.cs" />
+    <Compile Include="Model\TabControlModels\ITabControl.cs" />
     <Compile Include="ViewModel\MailViewModel.cs" />
     <Compile Include="ViewModel\ManagmentViewModel.cs" />
     <Compile Include="ViewModel\ManagmentViewModels\CtViewModel.cs" />
@@ -222,6 +238,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Utils\Languages\StringsEn.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StringsEn.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Utils\Languages\StringsRu.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StringsRu.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -252,6 +276,9 @@
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Configs\Settings.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="TestData\TestDataBase.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -274,6 +301,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="View\Settings\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

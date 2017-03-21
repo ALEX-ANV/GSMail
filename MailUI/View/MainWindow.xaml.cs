@@ -15,6 +15,7 @@ using System.Xml.Serialization;
 using MahApps.Metro.Controls.Dialogs;
 using MailUI.Context;
 using MailUI.Model;
+using MailUI.Model.TabControlModels;
 using MailUI.ViewModel;
 
 namespace MailUI.View
@@ -24,14 +25,18 @@ namespace MailUI.View
     /// </summary>
     public partial class MainWindow : INotifyPropertyChanged
     {
-        [ImportingConstructor]
+        //public MainWindowViewModel ViewModel { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
             dbContext = new UserContext();
+            DataContext = new MainWindowViewModel();
         }
 
         private UserContext dbContext;
+
+       
 
         public static BaseModel GlobalParameters = new BaseModel();
 
