@@ -11,9 +11,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <converters:ToUpper x:Key="ToUpper" />
+        <converters:ToUpperConverter x:Key="ToUpper" />
         <converters:SelectedRadioButton x:Key="SelectedRadioButton"/>
-        <converters:ContentFile x:Key="ContentFile"/>
+        <converters:ContentFileConverter x:Key="ContentFile"/>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>

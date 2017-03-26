@@ -10,9 +10,9 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <converters:NullToBooleanConverter x:Key="NullToBooleanConverter" />
-        <converters:FilesInDirectory x:Key="FilesInDirectory"/>
-        <converters:ChildDirectories x:Key="ChildDirectories"/>
-        <converters:ContentFile x:Key="ContentFile"/>
+        <converters:FilesInDirectoryConverter x:Key="FilesInDirectory"/>
+        <converters:ChildDirectoriesConverter x:Key="ChildDirectories"/>
+        <converters:ContentFileConverter x:Key="ContentFile"/>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>

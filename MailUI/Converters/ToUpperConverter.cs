@@ -9,7 +9,7 @@ using System.Windows.Data;
 namespace MailUI.Converters
 {
     [ValueConversion(typeof(string), typeof(string))]
-    public class ToUpper : IValueConverter
+    public class ToUpperConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

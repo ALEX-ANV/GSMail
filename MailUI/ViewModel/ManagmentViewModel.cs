@@ -9,8 +9,8 @@ using MailUI.ViewModel.ManagmentViewModels;
 
 namespace MailUI.ViewModel
 {
-    //[Export(typeof(ICustomTabControl))]
-    public class ManagmentViewModel : BaseViewModel
+    [Export(typeof(ISettingsItem))]
+    public class ManagmentViewModel : BaseViewModel, ISettingsItem
     {
         public ObservableCollection<ManagmentFileModel> ManagmentFiles { get; set; }
 
@@ -28,6 +28,11 @@ namespace MailUI.ViewModel
             {
                 templateView.Attach(this, templates.TemplateFiles[templateView.InstanceType]);
             }
+        }
+
+        public void AttachSettings(ManagmentViewModel mainView)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

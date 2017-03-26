@@ -61,6 +61,24 @@ namespace MailUI.Utils.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Применить.
+        /// </summary>
+        internal static string Base_Apply {
+            get {
+                return ResourceManager.GetString("Base_Apply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Отменить.
+        /// </summary>
+        internal static string Base_Cancel {
+            get {
+                return ResourceManager.GetString("Base_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Настройки.
         /// </summary>
         internal static string Base_Settings {
@@ -102,6 +120,24 @@ namespace MailUI.Utils.Languages {
         internal static string Mail_GridView_Type {
             get {
                 return ResourceManager.GetString("Mail_GridView_Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Инструменты.
+        /// </summary>
+        internal static string Menu_Tools {
+            get {
+                return ResourceManager.GetString("Menu_Tools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Настройки.
+        /// </summary>
+        internal static string Menu_Tools_Settings {
+            get {
+                return ResourceManager.GetString("Menu_Tools_Settings", resourceCulture);
             }
         }
         

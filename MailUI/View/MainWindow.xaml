@@ -4,10 +4,10 @@
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:mainWindowUserControls="clr-namespace:MailUI.View.MainWindowUserControls"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
-        xmlns:Custom="http://metro.mahapps.com/winfx/xaml/shared"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:languages="clr-namespace:MailUI.Utils.Languages"
         xmlns:converters="clr-namespace:MailUI.Converters"
+        xmlns:mainMenu="clr-namespace:MailUI.Model.MainMenu"
         x:Class="MailUI.View.MainWindow"
         Title="Почтовая система" 
         WindowState="Maximized"
@@ -17,25 +17,74 @@
         <languages:LocalizationConverter x:Key="Localization" />
         <converters:ValueConverterGroup x:Key="ToUpperLocalization">
             <languages:LocalizationConverter/>
-            <converters:ToUpper/>
+            <converters:ToUpperConverter/>
         </converters:ValueConverterGroup>
+        <converters:MenuItemModelToMenuItem x:Key="MenuItemModelToMenuItem" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:NullToBooleanConverter x:Key="NullToVisibilityConverter"/>
+            
     </controls:MetroWindow.Resources>
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
-            <Button>
-                <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="16"
-                               Height="16"
-                               Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}">
-                        <Rectangle.OpacityMask>
-                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_settings}" />
-                        </Rectangle.OpacityMask>
-                    </Rectangle>
-                    <TextBlock Margin="4 0 0 0"
-                   VerticalAlignment="Center"
-                   Text="{Binding Source=Base_Settings, Converter={StaticResource ToUpperLocalization}}" />
-                </StackPanel>
-            </Button>
+            <ListView ItemsSource="{Binding Path=MenuItems}" Background="Transparent"
+                      BorderThickness="0" BorderBrush="Transparent">
+                <ListView.ItemTemplate>
+                    <DataTemplate DataType="mainMenu:MenuItemModel">
+                        <Button ToolTip="{Binding Path=ToolTip, Converter={StaticResource ToUpperLocalization}}" 
+                                Visibility="{Binding Path=Visible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                Command="{Binding Path=Command}"
+                                Background="Transparent">
+                            <StackPanel Orientation="Horizontal">
+                                <Rectangle Width="16"
+                                           Height="16"
+                                           Visibility="{Binding Path=Icon, Converter={StaticResource NullToVisibilityConverter}}"
+                                           Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Fill" Visual="{Binding Path=Icon}" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <TextBlock Margin="4 0 0 0" VerticalAlignment="Center"
+                                Text="{Binding Path=Header, Converter={StaticResource ToUpperLocalization}}" />
+                            </StackPanel>
+                        </Button>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                        <Setter Property="Padding" Value="2,0,0,0"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="true">
+                                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                                        </Trigger>
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="IsSelected" Value="true"/>
+                                                <Condition Property="Selector.IsSelectionActive" Value="false"/>
+                                            </MultiTrigger.Conditions>
+                                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+                                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}"/>
+                                        </MultiTrigger>
+                                        <Trigger Property="IsEnabled" Value="false">
+                                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+            
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
 
@@ -45,8 +94,34 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Menu>
-            <MenuItem Header="Файл">
+        <!--<Menu ItemsSource="{Binding Path=, Converter={StaticResource MenuItemModelToMenuItem}}">-->
+            <!--<Menu Grid.Row="0" ItemsSource="{Binding Path=MenuItems}">
+                <Menu.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="MenuItem.Header" Value="{Binding Path=(mainMenu:MenuItemModel.Header)}"/>
+                    <Setter Property="MenuItem.ItemsSource" Value="{Binding Path=(mainMenu:MenuItemModel.Items)}"/>
+                    <Setter Property="MenuItem.Icon" Value="{Binding Path=(mainMenu:MenuItemModel.Icon)}"/>
+                    <Setter Property="MenuItem.IsCheckable" Value="{Binding Path=(mainMenu:MenuItemModel.IsCheckable)}"/>
+                    <Setter Property="MenuItem.IsChecked" Value="{Binding Path=(mainMenu:MenuItemModel.IsChecked)}"/>
+                        <Setter Property="MenuItem.Command" Value="{Binding}"/>
+                    <Setter Property="MenuItem.Visibility" Value="{Binding Path=(mainMenu:MenuItemModel.Visible), 
+                Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    <Setter Property="MenuItem.ToolTip" Value="{Binding Path=(mainMenu:MenuItemModel.ToolTip)}"/>
+                        <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=(mainMenu:MenuItemModel.IsSeparator)}" Value="true">
+                                <Setter Property="MenuItem.Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type MenuItem}">
+                                            <Separator Style="{DynamicResource {x:Static MenuItem.SeparatorStyleKey}}"/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Menu.ItemContainerStyle>
+            </Menu>-->
+            <!--<MenuItem Header="Файл">
                 <MenuItem Header="New" Click="MenuItem_OnClick"/>
                 <MenuItem Header="Open"/>
                 <MenuItem Header="Save"/>
@@ -58,17 +133,17 @@
                 <MenuItem Header="Undo"/>
                 <MenuItem Header="Redo"/>
                 <MenuItem Header="Добавить сотрудника"/>
-                <!--MenuItem Header="Отправить письмо" Click="SendMessage_Click"></>
+                --><!--MenuItem Header="Отправить письмо" Click="SendMessage_Click"></>
                 <Separator></Separator>
                 <MenuItem Header="Cut"></MenuItem>
                 <MenuItem Header="Copy"></MenuItem>
                 <MenuItem Header="Проверить почту" Click="PullMessage_OnClick"></MenuItem>
-                <MenuItem Header="Обновить дерево" Click="MenuItem_OnClick"></MenuItem-->
+                <MenuItem Header="Обновить дерево" Click="MenuItem_OnClick"></MenuItem--><!--
             </MenuItem>
             <MenuItem Header="Помощь">
                 <MenuItem Header="Об авторе"/>
-            </MenuItem>
-        </Menu>
+            </MenuItem>-->
+        <!--</Menu>-->
         <TabControl Grid.Row="1" x:Name="tabControl" ItemsSource="{Binding Path=Tabs}" SelectedIndex="0"> 
             <!--<TabItem Header="Почта">
                 <mainWindowUserControls:MailControl/>

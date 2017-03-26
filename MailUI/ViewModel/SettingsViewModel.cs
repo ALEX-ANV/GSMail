@@ -8,31 +8,29 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using MailUI.Model.MainMenu;
+using System.Windows.Input;
 using MailUI.Model.TabControlModels;
 
 namespace MailUI.ViewModel
 {
-    public class MainWindowViewModel
+    public class SettingsViewModel
     {
+        public ObservableCollection<TabItem> Tabs { get; set; }
+
         [ImportMany(typeof(ITabControl))]
         private IEnumerable<ITabControl> TabCollection { get; set; }
 
-        
-        public ObservableCollection<TabItem> Tabs { get; set; }
+        public ICommand Cancel { get; set; }
 
-        public ObservableCollection<MenuItemModel> MenuItems { get; set; }
-
-        public MainWindowViewModel()
+        public SettingsViewModel()
         {
             Tabs = new ObservableCollection<TabItem>();
             var catalog = new AssemblyCatalog(Assembly.GetExecutingAssembly());
             var container = new CompositionContainer(catalog);
             container.ComposeParts(this);
-            MenuItems = new ObservableCollection<MenuItemModel>();
-            foreach (var customTabControl in TabCollection.OrderBy(tab => tab.Order))
+            foreach (var customTabControl in TabCollection.OrderBy(tab => tab.Order).Where(t => t.Settings != null))
             {
-                Tabs.Add(new TabItem() { Header = customTabControl.Header, Content = customTabControl.Control });
+                Tabs.Add(new TabItem() { Header = customTabControl.Header, Content = customTabControl.Settings });
             }
         }
     }

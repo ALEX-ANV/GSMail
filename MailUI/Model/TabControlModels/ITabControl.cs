@@ -9,5 +9,7 @@ namespace MailUI.Model.TabControlModels
         UserControl Control { get; }
 
         int Order { get; }
+
+        UserControl Settings { get; }
     }
 }

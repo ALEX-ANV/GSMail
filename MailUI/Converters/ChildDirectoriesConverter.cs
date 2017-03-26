@@ -6,30 +6,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using MailUI.Model;
 
 namespace MailUI.Converters
 {
-    [ValueConversion(typeof(DirectoryInfo), typeof(FileInfo[]))]
-    public class FilesInDirectory : IValueConverter
+    class ChildDirectoriesConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null)
+            try
             {
-                return null;
+                if (value is string)
+                {
+                    return new DirectoryInfo((string)value).GetDirectories();
+                }
+                if (value is DirectoryInfo)
+                {
+                    return ((DirectoryInfo)value).GetDirectories();
+                }
             }
-            if (value is DirectoryInfo)
+            catch (UnauthorizedAccessException)
             {
-                return ((DirectoryInfo) value).GetFiles();
-
+                throw new UnauthorizedAccessException();
             }
             return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return false;
         }
     }
 }

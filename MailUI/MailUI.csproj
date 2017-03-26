@@ -65,21 +65,6 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Composition.AttributedModel, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.AttributedModel.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Composition.Convention, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.Convention.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Composition.Hosting, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.Hosting.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Composition.Runtime, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Composition.TypedParts, Version=1.0.30.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Composition.1.0.30\lib\portable-net45+win8+wp8+wpa81\System.Composition.TypedParts.dll</HintPath>
-    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -106,9 +91,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\ArrayStringToStringConverter.cs" />
-    <Compile Include="Converters\TimeToString.cs" />
+    <Compile Include="Converters\MenuItemModelToMenuItem.cs" />
+    <Compile Include="Converters\TimeToStringConverter.cs" />
     <Compile Include="Converters\ValueGroupConverter.cs" />
     <Compile Include="Model\Commands\CommandModel.cs" />
+    <Compile Include="Model\MainMenu\IMenuItem.cs" />
+    <Compile Include="ViewModel\ISettingsItem.cs" />
+    <Compile Include="Model\MainMenu\MenuItemModel.cs" />
     <Compile Include="Model\ManagmentFileModel.cs" />
     <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\ManagmentFiles\CtFile.cs" />
@@ -138,25 +127,28 @@
     <Compile Include="Model\Templates.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Context\UserContext.cs" />
-    <Compile Include="Converters\ChildDirectories.cs" />
-    <Compile Include="Converters\ContentFile.cs" />
+    <Compile Include="Converters\ChildDirectoriesConverter.cs" />
+    <Compile Include="Converters\ContentFileConverter.cs" />
     <Compile Include="Converters\NullToBooleanConverter.cs" />
-    <Compile Include="Converters\FilesInDirectory.cs" />
+    <Compile Include="Converters\FilesInDirectoryConverter.cs" />
     <Compile Include="Converters\SelectedRadioButton.cs" />
-    <Compile Include="Converters\ToUpper.cs" />
+    <Compile Include="Converters\ToUpperConverter.cs" />
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Model\Tree\TreeItemModel.cs" />
     <Compile Include="Helpers\SerializeHelper.cs" />
     <Compile Include="Utils\Logging.cs" />
-    <Compile Include="Utils\StringList.cs" />
     <Compile Include="Model\TabControlModels\ITabControl.cs" />
     <Compile Include="ViewModel\MailViewModel.cs" />
     <Compile Include="ViewModel\ManagmentViewModel.cs" />
     <Compile Include="ViewModel\ManagmentViewModels\CtViewModel.cs" />
     <Compile Include="ViewModel\ManagmentViewModels\NippoViewModel.cs" />
     <Compile Include="ViewModel\ManagmentViewModels\WtuViewModel.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="View\MainWindowUserControls\ManagmentControl.xaml.cs">
       <DependentUpon>ManagmentControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainWindowUserControls\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MainWindowUserControls\TaskControl.xaml.cs">
       <DependentUpon>TaskControl.xaml</DependentUpon>
@@ -169,6 +161,16 @@
     </Compile>
     <Compile Include="View\ManagmentControls\WtuControlView.xaml.cs">
       <DependentUpon>WtuControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Settings\SettingsMailControl.xaml.cs">
+      <DependentUpon>SettingsMailControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Settings\SettingsMenuItem.cs" />
+    <Compile Include="View\Settings\SettingsManagmentControl.xaml.cs">
+      <DependentUpon>SettingsManagmentControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Settings\SettingsTaskControl.xaml.cs">
+      <DependentUpon>SettingsTaskControl.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\Icons.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -202,6 +204,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\MainWindowUserControls\Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindowUserControls\TaskControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -215,6 +221,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ManagmentControls\WtuControlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Settings\SettingsMailControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Settings\SettingsManagmentControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Settings\SettingsTaskControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -302,9 +320,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="View\Settings\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

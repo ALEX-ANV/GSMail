@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Base_Apply" xml:space="preserve">
+    <value>Применить</value>
+  </data>
+  <data name="Base_Cancel" xml:space="preserve">
+    <value>Отменить</value>
+  </data>
   <data name="Base_Settings" xml:space="preserve">
     <value>Настройки</value>
   </data>
@@ -131,6 +137,12 @@
   </data>
   <data name="Mail_GridView_Type" xml:space="preserve">
     <value>Тип</value>
+  </data>
+  <data name="Menu_Tools" xml:space="preserve">
+    <value>Инструменты</value>
+  </data>
+  <data name="Menu_Tools_Settings" xml:space="preserve">
+    <value>Настройки</value>
   </data>
   <data name="TabItem_Mail" xml:space="preserve">
     <value>Почта</value>

@@ -6,34 +6,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using MailUI.Model;
 
 namespace MailUI.Converters
 {
-    class ChildDirectories : IValueConverter
+    [ValueConversion(typeof(FileInfo), typeof(string))]
+    public class ContentFileConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            try
+            if (value is FileInfo)
             {
-                if (value is string)
-                {
-                    return new DirectoryInfo((string)value).GetDirectories();
-                }
-                if (value is DirectoryInfo)
-                {
-                    return ((DirectoryInfo)value).GetDirectories();
-                }
-            }
-            catch (UnauthorizedAccessException)
-            {
-                throw new UnauthorizedAccessException();
+                return File.ReadAllText(((FileInfo)value).FullName, Encoding.Default);
             }
             return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return false;
+            throw new NotImplementedException();
         }
     }
 }

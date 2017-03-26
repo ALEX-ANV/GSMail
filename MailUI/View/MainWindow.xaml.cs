@@ -15,6 +15,7 @@ using System.Xml.Serialization;
 using MahApps.Metro.Controls.Dialogs;
 using MailUI.Context;
 using MailUI.Model;
+using MailUI.Model.MainMenu;
 using MailUI.Model.TabControlModels;
 using MailUI.ViewModel;
 
@@ -25,18 +26,24 @@ namespace MailUI.View
     /// </summary>
     public partial class MainWindow : INotifyPropertyChanged
     {
-        //public MainWindowViewModel ViewModel { get; set; }
+        [ImportMany(typeof(IMenuItem))]
+        private IEnumerable<IMenuItem> MenuItemCollections { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            dbContext = new UserContext();
+            _dbContext = new UserContext();
             DataContext = new MainWindowViewModel();
+            var catalog = new AssemblyCatalog(Assembly.GetExecutingAssembly());
+            var container = new CompositionContainer(catalog);
+            container.ComposeParts(this);
+            foreach (var menuItem in MenuItemCollections)
+            {
+                menuItem.AttachMenu(this.DataContext as MainWindowViewModel, this);
+            }
         }
 
-        private UserContext dbContext;
-
-       
+        private UserContext _dbContext;
 
         public static BaseModel GlobalParameters = new BaseModel();
 
@@ -62,7 +69,7 @@ namespace MailUI.View
                 //{
                 //    Environment.Exit(0);
                 //}
-                var user = dbContext.Users.FirstOrDefault(item =>
+                var user = _dbContext.Users.FirstOrDefault(item =>
                   string.Equals(item.UserName.ToLower(), /*loginData.Username*/"anv".ToLower())
                     && string.Equals(item.Password, /*loginData.Password*/"313"));
                 if (user == null)
@@ -74,13 +81,6 @@ namespace MailUI.View
                 GlobalParameters.UserName = user.UserName;
                 break;
             }
-        }
-
-        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
-        {
-            //var login = new AuthorizationControl();
-            //login.Visibility = Visibility.Visible;
-
         }
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)

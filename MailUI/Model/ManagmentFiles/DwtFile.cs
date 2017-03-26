@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.Composition;
+﻿using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using MailUI.Utils;
 using MailUI.ViewModel.ManagmentViewModels;
@@ -13,7 +14,7 @@ namespace MailUI.Model.ManagmentFiles
 
         public double WorkingDayPercent => 21 / WorkingDay * 100;
 
-        public StringList<BaseModel> TaskBasis { get; set; }
+        public List<BaseModel> TaskBasis { get; set; }
 
         public double TaskBasisEfforts
         {
@@ -27,7 +28,7 @@ namespace MailUI.Model.ManagmentFiles
             }
         }
 
-        public StringList<BaseModel> NippoBasis { get; set; }
+        public List<BaseModel> NippoBasis { get; set; }
 
         public double NippoBasisEfforts
         {
@@ -41,7 +42,7 @@ namespace MailUI.Model.ManagmentFiles
             }
         }
 
-        public StringList<BaseModel> BtBasis { get; set; }
+        public List<BaseModel> BtBasis { get; set; }
 
         public double BtBasisEfforts
         {
