@@ -142,6 +142,15 @@ namespace MailUI.Utils.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Базовые.
+        /// </summary>
+        internal static string TabItem_Common_Settings {
+            get {
+                return ResourceManager.GetString("TabItem_Common_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Почта.
         /// </summary>
         internal static string TabItem_Mail {

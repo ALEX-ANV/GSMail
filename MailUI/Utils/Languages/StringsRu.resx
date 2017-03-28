@@ -144,6 +144,9 @@
   <data name="Menu_Tools_Settings" xml:space="preserve">
     <value>Настройки</value>
   </data>
+  <data name="TabItem_Common_Settings" xml:space="preserve">
+    <value>Базовые</value>
+  </data>
   <data name="TabItem_Mail" xml:space="preserve">
     <value>Почта</value>
   </data>

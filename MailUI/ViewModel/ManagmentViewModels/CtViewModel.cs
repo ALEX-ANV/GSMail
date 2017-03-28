@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using GSMailApi.Model.Files.Managment;
 using MailUI.Model;
 using MailUI.Model.Commands;
-using MailUI.Model.ManagmentFiles;
-using MailUI.Utils;
 using MailUI.View;
 using MailUI.View.ManagmentControls;
 

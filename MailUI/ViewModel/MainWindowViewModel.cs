@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 using MailUI.Model.MainMenu;
 using MailUI.Model.TabControlModels;
@@ -30,7 +27,7 @@ namespace MailUI.ViewModel
             var container = new CompositionContainer(catalog);
             container.ComposeParts(this);
             MenuItems = new ObservableCollection<MenuItemModel>();
-            foreach (var customTabControl in TabCollection.OrderBy(tab => tab.Order))
+            foreach (var customTabControl in TabCollection.Where(t => t.Control != null).OrderBy(tab => tab.Order))
             {
                 Tabs.Add(new TabItem() { Header = customTabControl.Header, Content = customTabControl.Control });
             }

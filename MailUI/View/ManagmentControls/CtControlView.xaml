@@ -6,8 +6,8 @@
              xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:local="clr-namespace:MailUI.View.ManagmentControls"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-             xmlns:managmentFiles="clr-namespace:MailUI.Model.ManagmentFiles"
              xmlns:converters="clr-namespace:MailUI.Converters"
+             xmlns:managment="clr-namespace:GSMailApi.Model.Files.Managment;assembly=GSMailApi"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -41,7 +41,7 @@
         </StackPanel>
         <ListBox x:Name="ListTimes" Grid.Column="3" Grid.Row="0" Grid.RowSpan="2" ItemsSource="{Binding Path=CtFileSettings.CtWorking}">
             <ListBox.ItemTemplate>
-                <DataTemplate DataType="managmentFiles:LineCtWorkingDay">
+                <DataTemplate DataType="managment:LineCtWorkingDay">
                     <Border BorderThickness="1" BorderBrush="Gray" Margin="0 2 0 2">
                         <StackPanel Orientation="Vertical" >
                             <controls:DateTimePicker SelectedDate="{Binding Path=Day, Mode=TwoWay}"/>

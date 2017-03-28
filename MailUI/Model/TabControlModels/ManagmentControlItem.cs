@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 using System.Windows.Controls;
 using MailUI.Utils.Languages;
 using MailUI.View.MainWindowUserControls;

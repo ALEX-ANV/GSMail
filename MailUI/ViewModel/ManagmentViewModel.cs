@@ -4,7 +4,6 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Reflection;
 using MailUI.Model;
-using MailUI.Model.TabControlModels;
 using MailUI.ViewModel.ManagmentViewModels;
 
 namespace MailUI.ViewModel

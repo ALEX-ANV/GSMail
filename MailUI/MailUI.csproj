@@ -58,6 +58,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="HigLabo.Mail, Version=1.0.2.4, Culture=neutral, PublicKeyToken=20abaee7662647f3, processorArchitecture=MSIL">
+      <HintPath>..\packages\HigLabo.Mail.1.0.2.4\lib\net45\HigLabo.Mail.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=1.4.3.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.4.3\lib\net45\MahApps.Metro.dll</HintPath>
       <Private>True</Private>
@@ -96,37 +100,31 @@
     <Compile Include="Converters\ValueGroupConverter.cs" />
     <Compile Include="Model\Commands\CommandModel.cs" />
     <Compile Include="Model\MainMenu\IMenuItem.cs" />
+    <Compile Include="Model\TabControlModels\CommonControlItem.cs" />
+    <Compile Include="Utils\Languages\Localization.cs" />
+    <Compile Include="Utils\Languages\StringsEn.Designer.cs">
+      <DependentUpon>StringsEn.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Utils\Languages\StringsRu.Designer.cs">
+      <DependentUpon>StringsRu.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Utils\Logging.cs" />
+    <Compile Include="Utils\NotifyPropertyChanged.cs" />
     <Compile Include="ViewModel\ISettingsItem.cs" />
     <Compile Include="Model\MainMenu\MenuItemModel.cs" />
     <Compile Include="Model\ManagmentFileModel.cs" />
     <Compile Include="Model\BaseModel.cs" />
-    <Compile Include="Model\ManagmentFiles\CtFile.cs" />
-    <Compile Include="Model\ManagmentFiles\DwtFile.cs" />
     <Compile Include="Model\IBaseModel.cs" />
-    <Compile Include="Model\ManagmentFiles\IManagmentFile.cs" />
     <Compile Include="Model\TabControlModels\MailControlItem.cs" />
     <Compile Include="Model\TabControlModels\ManagmentControlItem.cs" />
     <Compile Include="Model\TabControlModels\TaskControlItem.cs" />
-    <Compile Include="Utils\Languages\Localization.cs" />
-    <Compile Include="Utils\Languages\StringsEn.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>StringsEn.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Utils\Languages\StringsRu.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>StringsRu.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Utils\NotifyPropertyChanged.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\ManagmentViewModels\ITemplateView.cs" />
-    <Compile Include="Model\ManagmentFiles\ManagmentFile.cs" />
-    <Compile Include="Model\ManagmentFiles\NippoFile.cs" />
-    <Compile Include="Model\ManagmentFiles\WtuFile.cs" />
     <Compile Include="Model\Templates.cs" />
-    <Compile Include="Model\User.cs" />
-    <Compile Include="Context\UserContext.cs" />
     <Compile Include="Converters\ChildDirectoriesConverter.cs" />
     <Compile Include="Converters\ContentFileConverter.cs" />
     <Compile Include="Converters\NullToBooleanConverter.cs" />
@@ -136,7 +134,6 @@
     <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Model\Tree\TreeItemModel.cs" />
     <Compile Include="Helpers\SerializeHelper.cs" />
-    <Compile Include="Utils\Logging.cs" />
     <Compile Include="Model\TabControlModels\ITabControl.cs" />
     <Compile Include="ViewModel\MailViewModel.cs" />
     <Compile Include="ViewModel\ManagmentViewModel.cs" />
@@ -161,6 +158,9 @@
     </Compile>
     <Compile Include="View\ManagmentControls\WtuControlView.xaml.cs">
       <DependentUpon>WtuControlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Settings\SettingsCommon.xaml.cs">
+      <DependentUpon>SettingsCommon.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Settings\SettingsMailControl.xaml.cs">
       <DependentUpon>SettingsMailControl.xaml</DependentUpon>
@@ -224,6 +224,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Settings\SettingsCommon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Settings\SettingsMailControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -270,40 +274,17 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="Templates\ct.gstf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\dwt.gstf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\nippo.gstf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Templates\wtu.gstf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <Resource Include="Resources\Entypo.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\WindowsIcons-license.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Entypo-license.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Configs\Settings.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Content Include="TestData\TestDataBase.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\TestDataBase_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>TestDataBase.mdf</DependentUpon>
-    </Content>
+    <Resource Include="Resources\Entypo-license.txt" />
+    <Resource Include="Resources\WindowsIcons-license.txt" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
@@ -320,7 +301,20 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\GSMailApi\GSMailApi.csproj">
+      <Project>{7b4a3cd5-86af-4927-bdb3-7e984b7ae9f7}</Project>
+      <Name>GSMailApi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MailCore\MailCore.csproj">
+      <Project>{7ca2977a-9ff8-4b9c-bd4a-79a7355005fd}</Project>
+      <Name>MailCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MySqlCon\MySqlCon.csproj">
+      <Project>{149bf50d-5632-4d9c-a1c7-2d9e26c06515}</Project>
+      <Name>MySqlCon</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

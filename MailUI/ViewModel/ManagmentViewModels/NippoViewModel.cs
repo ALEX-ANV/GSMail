@@ -3,9 +3,9 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Windows.Input;
+using GSMailApi.Model.Files.Managment;
 using MailUI.Model;
 using MailUI.Model.Commands;
-using MailUI.Model.ManagmentFiles;
 using MailUI.View;
 using MailUI.View.ManagmentControls;
 

@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.ComponentModel.Composition;
 using MahApps.Metro.Controls.Dialogs;
 using MailUI.Model.Commands;
 using MailUI.Model.MainMenu;
 using MailUI.Utils.Languages;
 using MailUI.ViewModel;
-using Localization = MailUI.Utils.Languages.Localization;
 
 namespace MailUI.View.Settings
 {

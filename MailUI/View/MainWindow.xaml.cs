@@ -1,23 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Xml.Serialization;
 using MahApps.Metro.Controls.Dialogs;
-using MailUI.Context;
 using MailUI.Model;
 using MailUI.Model.MainMenu;
-using MailUI.Model.TabControlModels;
 using MailUI.ViewModel;
+using MySqlCon.Context;
 
 namespace MailUI.View
 {
@@ -32,7 +26,7 @@ namespace MailUI.View
         public MainWindow()
         {
             InitializeComponent();
-            _dbContext = new UserContext();
+            _dbContext = new EmployeeContext();
             DataContext = new MainWindowViewModel();
             var catalog = new AssemblyCatalog(Assembly.GetExecutingAssembly());
             var container = new CompositionContainer(catalog);
@@ -43,7 +37,7 @@ namespace MailUI.View
             }
         }
 
-        private UserContext _dbContext;
+        private EmployeeContext _dbContext;
 
         public static BaseModel GlobalParameters = new BaseModel();
 
@@ -69,8 +63,8 @@ namespace MailUI.View
                 //{
                 //    Environment.Exit(0);
                 //}
-                var user = _dbContext.Users.FirstOrDefault(item =>
-                  string.Equals(item.UserName.ToLower(), /*loginData.Username*/"anv".ToLower())
+                var user = _dbContext.Employees.FirstOrDefault(item =>
+                  string.Equals(item.CompanyName.ToLower(), /*loginData.Username*/"anv".ToLower())
                     && string.Equals(item.Password, /*loginData.Password*/"313"));
                 if (user == null)
                 {
@@ -78,7 +72,7 @@ namespace MailUI.View
                     continue;
                 }
                 GlobalParameters.Date = DateTime.Now;
-                GlobalParameters.UserName = user.UserName;
+                GlobalParameters.UserName = user.CompanyName;
                 break;
             }
         }

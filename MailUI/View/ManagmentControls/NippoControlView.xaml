@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MailUI.View.ManagmentControls"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:managmentFiles="clr-namespace:MailUI.Model.ManagmentFiles"
              xmlns:converters="clr-namespace:MailUI.Converters"
+             xmlns:managment="clr-namespace:GSMailApi.Model.Files.Managment;assembly=GSMailApi"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -52,7 +52,7 @@
 
         <ListBox x:Name="ListTimes" Grid.Column="1" ItemsSource="{Binding Path=NippoFileSettings.Activities}">
             <ListBox.ItemTemplate>
-                <DataTemplate DataType="managmentFiles:Activity">
+                <DataTemplate DataType="managment:Activity">
                     <Border BorderThickness="1" BorderBrush="Gray" Margin="0 2 0 2">
                         <StackPanel Orientation="Vertical" Width="200">
                             <TextBox Text="{Binding Path=TaskName, Mode=TwoWay}" Tag="TaskName" Style="{StaticResource PlaceHolder}" />

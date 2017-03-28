@@ -21,7 +21,8 @@ namespace MailUI.Model
             {
                 Directory.CreateDirectory(_path);
             }
-            var gstf = new DirectoryInfo(_path).GetFiles("*.gstf");
+            var gstf = Directory.GetDirectories(_path, "*", SearchOption.AllDirectories).
+                SelectMany(t => new DirectoryInfo(t).GetFiles("*.gstf"));
             foreach (var fileInfo in gstf)
             {
                 var stringFile = File.ReadAllLines(fileInfo.FullName);
