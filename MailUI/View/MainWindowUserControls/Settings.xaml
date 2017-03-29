@@ -27,7 +27,7 @@
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="{Binding Source=Base_Apply, Converter={StaticResource Localization}}" 
                   Click="Apply"/>
-            <Button Content="{Binding Source=Base_Cancel, Converter={StaticResource Localization}}"/>
+            <Button Content="{Binding Source=Base_Cancel, Converter={StaticResource Localization}}" Click="Cancel"/>
         </StackPanel>
     </Grid>
 </dialogs:BaseMetroDialog>
