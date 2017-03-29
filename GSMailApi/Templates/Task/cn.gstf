@@ -1,0 +1,39 @@
+﻿.h1 {nameFile} {date} {list:"Receivers", item:"{Receiver}"}
+.h2 {shortDescription}
+
+PROJECT: {project}
+
+TASK: {task}
+LTN: {shortDescription}
+CUSTOMER: {cutomer}
+PRIORITY: {priority}
+
+SS: {ss}
+PL: {pl}
+TL: {tl}
+DD: {dd}
+VV: DDI SHE ANV
+
+WHY: customer's request
+
+WHAT:
+_____________________________________________________________________
+	INPUT:
+	
+	{input}
+        
+    OUTPUT:
+    
+    {output}		
+		
+				
+	RA:
+	{list:"RaEfforts", item:"employee < effort"}
+_____________________________________________________________________
+
+START: {date}
+DL RA: {DLRA}
+DEADLINE: {Deadline}
+
+:{username}
+****
